@@ -1,0 +1,9 @@
+baseCost = 50.000 × 2 = 100.000
+
+totalWattage = (2 × 250) + (4 × 40) + 300 + 100 = 1180 W
+
+electricityConsumption = (1180 × 2) / 1000 = 2.36 kWh
+
+electricityCost = 2.36 × 1500 = 3.540
+
+totalCost = 100.000 + 3.540 = 103.540
