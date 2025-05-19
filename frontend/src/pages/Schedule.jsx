@@ -1,366 +1,452 @@
-import { useState, useEffect } from 'react';
-import { FaCalendarAlt, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
-import scheduleService from '../services/scheduleService';
+import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { FaCalendarAlt, FaChartBar, FaListAlt, FaBuilding, FaUser, FaExclamationCircle } from 'react-icons/fa';
+import api from '../services/api';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../context/AuthContext';
 
 const Schedule = () => {
-  const [schedule, setSchedule] = useState([]);
+  const { user } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState('calendar');
+  const [bookings, setBookings] = useState([]);
+  const [bookingStats, setBookingStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [view, setView] = useState('week'); // 'day', 'week', or 'month'
-  
-  // Mock student ID - in a real app, this would come from authentication
-  const studentId = '12345';
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date().toISOString().split('T')[0],
+    endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+  });
   
   useEffect(() => {
-    const fetchSchedule = async () => {
-      try {
-        // In a real app, this would be an actual API call
-        // For now, we'll simulate the data
-        
-        // Simulate a delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Mock schedule data
-        const mockSchedule = [
-          {
-            _id: '1',
-            courseName: 'Introduction to Programming',
-            instructor: 'Dr. Smith',
-            dayOfWeek: 'Monday',
-            startTime: '09:00',
-            endTime: '10:30',
-            location: {
-              building: 'Building B',
-              roomNumber: '101'
-            },
-            semester: '6',
-            academicYear: '2024-2025'
-          },
-          {
-            _id: '2',
-            courseName: 'test1',
-            instructor: 'Prof. topik',
-            dayOfWeek: 'Monday',
-            startTime: '14:00',
-            endTime: '15:30',
-            location: {
-              building: 'Building A',
-              roomNumber: '203'
-            },
-            semester: '4',
-            academicYear: '2024-2025'
-          },
-          {
-            _id: '3',
-            courseName: 'test2',
-            instructor: 'Prof. topik',
-            dayOfWeek: 'Tuesday',
-            startTime: '11:00',
-            endTime: '12:30',
-            location: {
-              building: 'Building C',
-              roomNumber: '305'
-            },
-            semester: '3',
-            academicYear: '2024-2025'
-          },
-          {
-            _id: '4',
-            courseName: 'DSD',
-            instructor: 'Prof. Riri',
-            dayOfWeek: 'Wednesday',
-            startTime: '13:00',
-            endTime: '14:30',
-            location: {
-              building: 'Building A',
-              roomNumber: '105'
-            },
-            semester: '1',
-            academicYear: '2024-2025'
-          },
-          {
-            _id: '5',
-            courseName: 'SBD',
-            instructor: 'Pak yan',
-            dayOfWeek: 'Thursday',
-            startTime: '10:00',
-            endTime: '11:30',
-            location: {
-              building: 'Building B',
-              roomNumber: '202'
-            },
-            semester: '4',
-            academicYear: '2024-2025'
-          },
-          {
-            _id: '6',
-            courseName: 'DMJ',
-            instructor: 'Pak Elvian',
-            dayOfWeek: 'Friday',
-            startTime: '15:00',
-            endTime: '16:30',
-            location: {
-              building: 'Building C',
-              roomNumber: '101'
-            },
-            semester: '4',
-            academicYear: '2024-2025'
-          }
-        ];
-        
-        setSchedule(mockSchedule);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching schedule:', error);
-        toast.error('Failed to load schedule');
-        setLoading(false);
-      }
-    };
-    
-    fetchSchedule();
-  }, [studentId]);
+    fetchBookingsForSchedule();
+  }, [dateRange]);
   
-  const getDayName = (date) => {
-    return date.toLocaleDateString('en-US', { weekday: 'long' });
+  useEffect(() => {
+    if (activeTab === 'history' && user && user.role === 'pemimpin') {
+      fetchBookingHistory();
+    }
+  }, [activeTab, user]); // Updated to use the entire user object
+  
+  const fetchBookingsForSchedule = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get('/api/booking/for-schedule', {
+        params: dateRange
+      });
+      setBookings(res.data || []);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching schedule bookings:', error);
+      toast.error('Failed to load schedule');
+      setBookings([]);
+      setLoading(false);
+    }
   };
   
-  const getMonthName = (date) => {
-    return date.toLocaleDateString('en-US', { month: 'long' });
+  const fetchBookingHistory = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get('/api/booking/all-with-stats');
+      setBookingStats(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching booking history:', error);
+      toast.error('Failed to load booking history');
+      setLoading(false);
+    }
   };
   
-  const getWeekDays = () => {
-    const days = [];
-    const startOfWeek = new Date(currentDate);
-    const day = currentDate.getDay();
-    const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
-    startOfWeek.setDate(diff);
-    
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(startOfWeek);
-      date.setDate(date.getDate() + i);
-      days.push(date);
+  const handleDateRangeChange = (e) => {
+    const { name, value } = e.target;
+    setDateRange({
+      ...dateRange,
+      [name]: value
+    });
+  };
+  
+  const formatDate = (date) => {
+    if (!date) return 'N/A';
+    return new Date(date).toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+  
+  const renderCalendarView = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      );
     }
     
-    return days;
-  };
-  
-  const navigatePrevious = () => {
-    const newDate = new Date(currentDate);
-    if (view === 'day') {
-      newDate.setDate(newDate.getDate() - 1);
-    } else if (view === 'week') {
-      newDate.setDate(newDate.getDate() - 7);
-    } else if (view === 'month') {
-      newDate.setMonth(newDate.getMonth() - 1);
-    }
-    setCurrentDate(newDate);
-  };
-  
-  const navigateNext = () => {
-    const newDate = new Date(currentDate);
-    if (view === 'day') {
-      newDate.setDate(newDate.getDate() + 1);
-    } else if (view === 'week') {
-      newDate.setDate(newDate.getDate() + 7);
-    } else if (view === 'month') {
-      newDate.setMonth(newDate.getMonth() + 1);
-    }
-    setCurrentDate(newDate);
-  };
-  
-  const navigateToday = () => {
-    setCurrentDate(new Date());
-  };
-  
-  const getClassesForDay = (dayName) => {
-    return schedule.filter(item => item.dayOfWeek === dayName);
-  };
-  
-  const renderDayView = () => {
-    const dayName = getDayName(currentDate);
-    const classes = getClassesForDay(dayName);
-    
-    return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold text-blue-800 mb-4">
-            {currentDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
-          </h2>
-          
-          {classes.length > 0 ? (
-            <div className="space-y-4">
-              {classes.map(classItem => (
-                <div key={classItem._id} className="border border-gray-200 rounded-md p-4 hover:bg-blue-50">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <h3 className="text-lg font-medium text-blue-800">{classItem.courseName}</h3>
-                      <p className="text-sm text-gray-500">Instructor: {classItem.instructor}</p>
-                    </div>
-                    <div className="mt-2 md:mt-0">
-                      <div className="flex items-center text-sm text-gray-700 mb-1">
-                        <FaClock className="mr-2 text-blue-600" />
-                        {classItem.startTime} - {classItem.endTime}
-                      </div>
-                      <div className="flex items-center text-sm text-gray-700">
-                        <FaMapMarkerAlt className="mr-2 text-blue-600" />
-                        {classItem.location.building}, Room {classItem.location.roomNumber}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-gray-500">No classes scheduled for this day.</p>
-            </div>
+    if (!bookings || bookings.length === 0) {
+      return (
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <FaExclamationCircle className="mx-auto h-12 w-12 text-blue-500 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No bookings found</h3>
+          <p className="text-gray-500 mb-4">
+            There are no bookings scheduled for the selected date range.
+          </p>
+          {user && (user.role === 'pemimpin' || user.role === 'pemimpin_divisi') && (
+            <Link 
+              to="/room-booking"
+              className="btn-primary inline-block"
+            >
+              Book a Room
+            </Link>
           )}
         </div>
-      </div>
-    );
-  };
-  
-  const renderWeekView = () => {
-    const weekDays = getWeekDays();
+      );
+    }
+    
+    // Group bookings by date
+    const bookingsByDate = bookings.reduce((acc, booking) => {
+      if (!booking || !booking.date) return acc;
+      const dateKey = new Date(booking.date).toISOString().split('T')[0];
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(booking);
+      return acc;
+    }, {});
     
     return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold text-blue-800 mb-4">
-            {weekDays[0].toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} - {weekDays[6].toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
-            {weekDays.map((date, index) => {
-              const dayName = getDayName(date);
-              const classes = getClassesForDay(dayName);
-              const isToday = new Date().toDateString() === date.toDateString();
-              
-              return (
-                <div key={index} className={`border rounded-md overflow-hidden ${isToday ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
-                  <div className={`p-2 text-center ${isToday ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}>
-                    <div className="font-medium">{dayName.slice(0, 3)}</div>
-                    <div className="text-lg">{date.getDate()}</div>
+      <div className="space-y-6">
+        {Object.entries(bookingsByDate).map(([date, dayBookings]) => (
+          <div key={date} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-blue-50 p-4 border-b border-blue-100">
+              <h3 className="text-lg font-medium text-blue-800">
+                {formatDate(date)}
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="space-y-4">
+                {dayBookings.map(booking => (
+                  <div key={booking._id} className="border-b border-gray-200 pb-4 last:border-b-0 last:pb-0">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                      <div>
+                        <h4 className="text-md font-semibold text-blue-800">
+                          {booking.roomId && `${booking.roomId.building}, Room ${booking.roomId.roomNumber}`}
+                        </h4>
+                        <p className="text-sm text-gray-600">{booking.purpose}</p>
+                      </div>
+                      <div className="mt-2 md:mt-0">
+                        <span className="text-sm font-medium text-gray-700">
+                          {booking.startTime} - {booking.endTime}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <FaUser className="mr-1" />
+                        {booking.userId && booking.userId.name}
+                      </span>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <FaBuilding className="mr-1" />
+                        {booking.division && (booking.division.charAt(0).toUpperCase() + booking.division.slice(1))}
+                      </span>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        <FaUser className="mr-1" />
+                        {booking.numberOfAttendees} attendees
+                      </span>
+                    </div>
                   </div>
-                  
-                  <div className="p-2 h-48 overflow-y-auto">
-                    {classes.length > 0 ? (
-                      <div className="space-y-2">
-                        {classes.map(classItem => (
-                          <div key={classItem._id} className="bg-blue-100 rounded p-2 text-xs">
-                            <div className="font-medium text-blue-800">{classItem.courseName}</div>
-                            <div className="text-gray-700">{classItem.startTime} - {classItem.endTime}</div>
-                            <div className="text-gray-700">{classItem.location.building}, {classItem.location.roomNumber}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+  
+  const renderHistoryView = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      );
+    }
+    
+    if (!bookingStats || !bookingStats.bookings || bookingStats.bookings.length === 0) {
+      return (
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <FaExclamationCircle className="mx-auto h-12 w-12 text-blue-500 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No booking history found</h3>
+          <p className="text-gray-500">
+            There are no bookings in the system yet.
+          </p>
+        </div>
+      );
+    }
+    
+    return (
+      <div className="space-y-6">
+        {/* User Booking Statistics */}
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-blue-50 p-4 border-b border-blue-100">
+            <h3 className="text-lg font-medium text-blue-800">
+              User Booking Statistics
+            </h3>
+          </div>
+          <div className="p-4">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      User
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Role
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Division
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Total Bookings
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Total Cost
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {bookingStats.userStats && bookingStats.userStats.map(stat => (
+                    <tr key={stat._id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span className="text-blue-800 font-medium">{stat.name && stat.name.charAt(0)}</span>
                           </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="h-full flex items-center justify-center">
-                        <p className="text-gray-400 text-xs">No classes</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">{stat.name}</div>
+                            <div className="text-sm text-gray-500">{stat.email}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                          {stat.role === 'pemimpin' ? 'Pemimpin' : 
+                           stat.role === 'pemimpin_divisi' ? 'Pemimpin Divisi' : 'Anggota Divisi'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {stat.division ? stat.division.charAt(0).toUpperCase() + stat.division.slice(1) : '-'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {stat.totalBookings}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${stat.totalCost ? stat.totalCost.toFixed(2) : '0.00'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        {/* Division Booking Statistics */}
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-blue-50 p-4 border-b border-blue-100">
+            <h3 className="text-lg font-medium text-blue-800">
+              Division Booking Statistics
+            </h3>
+          </div>
+          <div className="p-4">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Division
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Total Bookings
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Total Cost
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {bookingStats.divisionStats && bookingStats.divisionStats.map(stat => (
+                    <tr key={stat._id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                          {stat._id && (stat._id.charAt(0).toUpperCase() + stat._id.slice(1))}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {stat.totalBookings}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${stat.totalCost ? stat.totalCost.toFixed(2) : '0.00'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        {/* All Bookings */}
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-blue-50 p-4 border-b border-blue-100">
+            <h3 className="text-lg font-medium text-blue-800">
+              All Bookings
+            </h3>
+          </div>
+          <div className="p-4">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Room
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      User
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Division
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Time
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Cost
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {bookingStats.bookings && bookingStats.bookings.map(booking => (
+                    <tr key={booking._id}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {booking.date ? new Date(booking.date).toLocaleDateString() : 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {booking.roomId ? `${booking.roomId.building}, Room ${booking.roomId.roomNumber}` : 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900">{booking.userId ? booking.userId.name : 'N/A'}</div>
+                        <div className="text-xs text-gray-500">{booking.userId ? booking.userId.email : ''}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {booking.division ? booking.division.charAt(0).toUpperCase() + booking.division.slice(1) : 'N/A'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {booking.startTime} - {booking.endTime}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {booking.status === 'confirmed' ? (
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            Confirmed
+                          </span>
+                        ) : booking.status === 'pending' ? (
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                            Pending
+                          </span>
+                        ) : (
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                            Cancelled
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${booking.totalCost ? booking.totalCost.toFixed(2) : '0.00'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     );
   };
-  
-  const renderMonthView = () => {
-    // This is a simplified month view that just shows the month name
-    // In a real app, you would render a full calendar grid
-    return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold text-blue-800 mb-4">
-            {getMonthName(currentDate)} {currentDate.getFullYear()}
-          </h2>
-          
-          <div className="text-center py-8">
-            <p className="text-gray-500">Month view is not implemented in this demo.</p>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
   
   return (
     <div>
-      <h1 className="page-title">Class Schedule</h1>
+      <h1 className="page-title">Schedule & Booking History</h1>
       
-      {/* Navigation Controls */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-          <div className="flex items-center space-x-4">
-            <button 
-              onClick={navigatePrevious}
-              className="p-2 rounded-md hover:bg-gray-100"
+      {/* Tabs */}
+      <div className="bg-white rounded-lg shadow-md mb-6">
+        <div className="border-b border-gray-200">
+          <nav className="flex -mb-px">
+            <button
+              onClick={() => setActiveTab('calendar')}
+              className={`py-4 px-6 text-center border-b-2 font-medium text-sm ${
+                activeTab === 'calendar'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
             >
-              <FaChevronLeft className="h-5 w-5 text-blue-600" />
+              <FaCalendarAlt className="inline-block mr-2" />
+              Calendar View
             </button>
             
-            <button 
-              onClick={navigateToday}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Today
-            </button>
-            
-            <button 
-              onClick={navigateNext}
-              className="p-2 rounded-md hover:bg-gray-100"
-            >
-              <FaChevronRight className="h-5 w-5 text-blue-600" />
-            </button>
-            
-            <div className="hidden md:block">
-              <h2 className="text-lg font-medium text-gray-700">
-                {view === 'day' && currentDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-                {view === 'week' && `Week of ${getWeekDays()[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`}
-                {view === 'month' && `${getMonthName(currentDate)} ${currentDate.getFullYear()}`}
-              </h2>
-            </div>
-          </div>
-          
-          <div className="flex space-x-2">
-            <button 
-              onClick={() => setView('day')}
-              className={`px-3 py-1 text-sm rounded-md ${view === 'day' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-            >
-              Day
-            </button>
-            <button 
-              onClick={() => setView('week')}
-              className={`px-3 py-1 text-sm rounded-md ${view === 'week' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-            >
-              Week
-            </button>
-            <button 
-              onClick={() => setView('month')}
-              className={`px-3 py-1 text-sm rounded-md ${view === 'month' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-            >
-              Month
-            </button>
-          </div>
+            {user && user.role === 'pemimpin' && (
+              <button
+                onClick={() => setActiveTab('history')}
+                className={`py-4 px-6 text-center border-b-2 font-medium text-sm ${
+                  activeTab === 'history'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <FaChartBar className="inline-block mr-2" />
+                Booking History & Statistics
+              </button>
+            )}
+          </nav>
         </div>
       </div>
       
-      {/* Schedule View */}
-      {view === 'day' && renderDayView()}
-      {view === 'week' && renderWeekView()}
-      {view === 'month' && renderMonthView()}
+      {/* Calendar View Filters */}
+      {activeTab === 'calendar' && (
+        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center">
+                <FaCalendarAlt className="text-blue-600 mr-2" />
+                <span className="text-sm font-medium text-gray-700 mr-2">Date Range:</span>
+              </div>
+              <div className="flex space-x-2">
+                <input
+                  type="date"
+                  name="startDate"
+                  value={dateRange.startDate}
+                  onChange={handleDateRangeChange}
+                />
+                <input
+                  type="date"
+                  name="endDate"
+                  value={dateRange.endDate}
+                  onChange={handleDateRangeChange}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Render Active Tab */}
+      {activeTab === 'calendar' ? renderCalendarView() : renderHistoryView()}
     </div>
   );
 };

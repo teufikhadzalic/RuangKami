@@ -33,4 +33,32 @@ router.get(
   roomController.getRoomById
 );
 
+///NEWWW
+
+// Create a new room (only pemimpin)
+router.post(
+  '/create',
+  auth,
+  hasRole('pemimpin'),
+  roomController.createRoom
+);
+
+// Update a room (only pemimpin)
+router.put(
+  '/:id',
+  auth,
+  hasRole('pemimpin'),
+  roomController.updateRoom
+);
+
+// Delete a room (only pemimpin)
+router.delete(
+  '/:id',
+  auth,
+  hasRole('pemimpin'),
+  roomController.deleteRoom
+);
+
+///NEW
+
 module.exports = router;
