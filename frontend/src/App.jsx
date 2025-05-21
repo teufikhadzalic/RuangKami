@@ -12,11 +12,11 @@ import AssignmentDetail from './pages/AssignmentDetail';
 import Schedule from './pages/Schedule';
 import RoomBooking from './pages/RoomBooking';
 import RoomDetail from './pages/RoomDetail';
+import RoomManagement from './pages/RoomManagement';
 import MyBookings from './pages/MyBookings';
 import Profile from './pages/Profile';
 import Unauthorized from './pages/Unauthorized';
 import NotFound from './pages/NotFound';
-
 
 function App() {
   return (
@@ -41,6 +41,7 @@ function App() {
           <Route element={<PrivateRoute allowedRoles={['pemimpin']} />}>
             <Route element={<Layout />}>
               <Route path="/assignments/create" element={<CreateAssignment />} />
+              <Route path="/room-management" element={<RoomManagement />} />
             </Route>
           </Route>
           
@@ -52,9 +53,6 @@ function App() {
             </Route>
           </Route>
           
-
-          
-            
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
