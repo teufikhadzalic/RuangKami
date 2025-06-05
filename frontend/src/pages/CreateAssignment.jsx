@@ -54,18 +54,18 @@ const CreateAssignment = () => {
       <div className="flex items-center mb-6">
         <button 
           onClick={() => navigate('/assignments')}
-          className="mr-4 text-blue-600 hover:text-blue-800"
+          className="mr-4 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
         >
           <FaArrowLeft className="h-5 w-5" />
         </button>
         <h1 className="page-title mb-0">Create Assignment</h1>
       </div>
       
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
         <div className="p-6">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                 Title
               </label>
               <input
@@ -74,13 +74,13 @@ const CreateAssignment = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 placeholder="Assignment title"
               />
             </div>
             
             <div className="mb-4">
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                 Description
               </label>
               <textarea
@@ -89,25 +89,25 @@ const CreateAssignment = () => {
                 rows={4}
                 value={formData.description}
                 onChange={handleChange}
-                className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 placeholder="Detailed description of the assignment"
               />
             </div>
             
             <div className="mb-4">
-              <label htmlFor="division" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="division" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                 Division
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaBuilding className="h-5 w-5 text-gray-400" />
+                  <FaBuilding className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                 </div>
                 <select
                   id="division"
                   name="division"
                   value={formData.division}
                   onChange={handleChange}
-                  className="pl-10 pr-10 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  className="pl-10 pr-10 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 >
                   <option value="">Select Division</option>
                   <option value="art">Art</option>
@@ -118,12 +118,12 @@ const CreateAssignment = () => {
             </div>
             
             <div className="mb-6">
-              <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                 Due Date
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaCalendarAlt className="h-5 w-5 text-gray-400" />
+                  <FaCalendarAlt className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                 </div>
                 <input
                   type="datetime-local"
@@ -132,7 +132,7 @@ const CreateAssignment = () => {
                   value={formData.dueDate}
                   onChange={handleChange}
                   min={new Date().toISOString().slice(0, 16)}
-                  className="pl-10 pr-4 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  className="pl-10 pr-4 py-2 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 />
               </div>
             </div>
@@ -141,14 +141,14 @@ const CreateAssignment = () => {
               <button
                 type="button"
                 onClick={() => navigate('/assignments')}
-                className="mr-4 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="mr-4 inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-blue-400"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400"
               >
                 {loading ? (
                   <>

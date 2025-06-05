@@ -1,32 +1,19 @@
-# Build stage
-FROM node:18-alpine AS build
+FROM node:20-alpine AS build
 
-# Buat direktori aplikasi
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Salin package.json dan package-lock.json
 COPY package*.json ./
-
-# Install dependensi
 RUN npm install
 
-# Salin kode sumber aplikasi
 COPY . .
 
-# Build aplikasi
 RUN npm run build
 
-# Production stage
+# Serve with a lightweight web server
 FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Salin hasil build ke direktori nginx
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-
-# Salin konfigurasi nginx (opsional)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port 80
+# Expose the default Nginx port
 EXPOSE 80
 
-# Command untuk menjalankan nginx
 CMD ["nginx", "-g", "daemon off;"]

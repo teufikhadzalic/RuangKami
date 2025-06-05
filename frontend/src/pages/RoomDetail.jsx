@@ -238,7 +238,7 @@ const RoomDetail = () => {
       <div className="flex items-center mb-6">
         <button 
           onClick={() => navigate('/room-booking')}
-          className="mr-4 text-blue-600 hover:text-blue-800"
+          className="mr-4 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
         >
           <FaArrowLeft className="h-5 w-5" />
         </button>
@@ -248,89 +248,89 @@ const RoomDetail = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Room Details */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
             <div className="p-6">
-              <h2 className="text-lg font-medium text-blue-800 mb-4">Room Details</h2>
+              <h2 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-4">Room Details</h2>
               
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center">
-                    <FaBuilding className="text-gray-500 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">Location:</span>
+                    <FaBuilding className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Location:</span>
                   </div>
-                  <p className="text-sm text-gray-700 ml-6">{room.building}, Floor {room.floor}</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-200 ml-6">{room.building}, Floor {room.floor}</p>
                 </div>
                 
                 <div>
                   <div className="flex items-center">
-                    <FaUsers className="text-gray-500 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">Capacity:</span>
+                    <FaUsers className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Capacity:</span>
                   </div>
-                  <p className="text-sm text-gray-700 ml-6">{room.capacity} people</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-200 ml-6">{room.capacity} people</p>
                 </div>
                 
                 <div>
                   <div className="flex items-center">
-                    <FaInfoCircle className="text-gray-500 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">Type:</span>
+                    <FaInfoCircle className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Type:</span>
                   </div>
-                  <p className="text-sm text-gray-700 ml-6">{room.type.charAt(0).toUpperCase() + room.type.slice(1)}</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-200 ml-6">{room.type.charAt(0).toUpperCase() + room.type.slice(1)}</p>
                 </div>
                 
                 <div>
                   <div className="flex items-center">
-                    <FaInfoCircle className="text-gray-500 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">Base Rate:</span>
+                    <FaInfoCircle className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Base Rate:</span>
                   </div>
-                  <p className="text-sm text-gray-700 ml-6">${room.baseRatePerHour} per hour</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-200 ml-6">${room.baseRatePerHour} per hour</p>
                 </div>
                 
                 <div>
                   <div className="flex items-center">
-                    <FaInfoCircle className="text-gray-500 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">Electricity Rate:</span>
+                    <FaInfoCircle className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Electricity Rate:</span>
                   </div>
-                  <p className="text-sm text-gray-700 ml-6">${room.electricityRatePerKWh} per kWh</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-200 ml-6">${room.electricityRatePerKWh} per kWh</p>
                 </div>
                 
                 <div>
                   <div className="flex items-center mb-2">
-                    <FaInfoCircle className="text-gray-500 mr-2" />
-                    <span className="text-sm font-medium text-gray-700">Facilities:</span>
+                    <FaInfoCircle className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Facilities:</span>
                   </div>
-                  <ul className="text-sm text-gray-700 ml-6 space-y-1">
+                  <ul className="text-sm text-gray-700 dark:text-gray-200 ml-6 space-y-1">
                     {room.facilities.hasProjector && (
                       <li className="flex items-center">
-                        <FaChalkboardTeacher className="text-blue-600 mr-2" />
+                        <FaChalkboardTeacher className="text-blue-600 dark:text-blue-400 mr-2" />
                         Projector
                       </li>
                     )}
                     {room.facilities.hasWhiteboard && (
                       <li className="flex items-center">
-                        <FaChalkboardTeacher className="text-blue-600 mr-2" />
+                        <FaChalkboardTeacher className="text-blue-600 dark:text-blue-400 mr-2" />
                         Whiteboard
                       </li>
                     )}
                     {room.facilities.hasAirConditioner && (
                       <li className="flex items-center">
-                        <FaSnowflake className="text-blue-600 mr-2" />
+                        <FaSnowflake className="text-blue-600 dark:text-blue-400 mr-2" />
                         Air Conditioner ({room.facilities.numberOfAC} units)
                       </li>
                     )}
                     {room.facilities.hasComputers && (
                       <li className="flex items-center">
-                        <FaDesktop className="text-blue-600 mr-2" />
+                        <FaDesktop className="text-blue-600 dark:text-blue-400 mr-2" />
                         Computers ({room.facilities.numberOfComputers} units)
                       </li>
                     )}
                     {room.facilities.hasAudioSystem && (
                       <li className="flex items-center">
-                        <FaVolumeUp className="text-blue-600 mr-2" />
+                        <FaVolumeUp className="text-blue-600 dark:text-blue-400 mr-2" />
                         Audio System
                       </li>
                     )}
                     <li className="flex items-center">
-                      <FaLightbulb className="text-blue-600 mr-2" />
+                      <FaLightbulb className="text-blue-600 dark:text-blue-400 mr-2" />
                       Lights ({room.facilities.numberOfLights} units)
                     </li>
                   </ul>
@@ -342,19 +342,19 @@ const RoomDetail = () => {
         
         {/* Booking Form */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
             <div className="p-6">
-              <h2 className="text-lg font-medium text-blue-800 mb-4">Booking Details</h2>
+              <h2 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-4">Booking Details</h2>
               
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div>
-                    <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       Date*
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaCalendarAlt className="h-5 w-5 text-gray-400" />
+                        <FaCalendarAlt className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                       </div>
                       <input
                         type="date"
@@ -363,7 +363,7 @@ const RoomDetail = () => {
                         value={bookingForm.date}
                         onChange={handleInputChange}
                         min={new Date().toISOString().split('T')[0]}
-                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         required
                       />
                     </div>
@@ -371,7 +371,7 @@ const RoomDetail = () => {
                   
                   {user.role === 'pemimpin' && (
                     <div>
-                      <label htmlFor="division" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="division" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                         Division*
                       </label>
                       <select
@@ -379,7 +379,7 @@ const RoomDetail = () => {
                         name="division"
                         value={bookingForm.division}
                         onChange={handleInputChange}
-                        className="pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-3 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         required
                       >
                         <option value="">Select Division</option>
@@ -391,12 +391,12 @@ const RoomDetail = () => {
                   )}
                   
                   <div>
-                    <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       Start Time*
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaClock className="h-5 w-5 text-gray-400" />
+                        <FaClock className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                       </div>
                       <input
                         type="time"
@@ -404,19 +404,19 @@ const RoomDetail = () => {
                         name="startTime"
                         value={bookingForm.startTime}
                         onChange={handleInputChange}
-                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         required
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="endTime" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="endTime" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       End Time*
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaClock className="h-5 w-5 text-gray-400" />
+                        <FaClock className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                       </div>
                       <input
                         type="time"
@@ -424,14 +424,14 @@ const RoomDetail = () => {
                         name="endTime"
                         value={bookingForm.endTime}
                         onChange={handleInputChange}
-                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         required
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="purpose" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="purpose" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       Purpose*
                     </label>
                     <input
@@ -441,18 +441,18 @@ const RoomDetail = () => {
                       value={bookingForm.purpose}
                       onChange={handleInputChange}
                       placeholder="Meeting, Class, Event, etc."
-                      className="pl-3 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                      className="pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                       required
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="numberOfAttendees" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="numberOfAttendees" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       Number of Attendees*
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaUsers className="h-5 w-5 text-gray-400" />
+                        <FaUsers className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                       </div>
                       <input
                         type="number"
@@ -462,14 +462,14 @@ const RoomDetail = () => {
                         onChange={handleInputChange}
                         min="1"
                         max={room.capacity}
-                        className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         required
                       />
                     </div>
                   </div>
                 </div>
                 
-                <h3 className="text-md font-medium text-blue-800 mb-3">Facilities to Use</h3>
+                <h3 className="text-md font-medium text-blue-800 dark:text-blue-200 mb-3">Facilities to Use</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   {room.facilities.hasAirConditioner && (
@@ -480,9 +480,9 @@ const RoomDetail = () => {
                         name="usedFacilities.useAC"
                         checked={bookingForm.usedFacilities.useAC}
                         onChange={handleInputChange}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                       />
-                      <label htmlFor="useAC" className="ml-2 block text-sm text-gray-700">
+                      <label htmlFor="useAC" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                         Use Air Conditioner
                       </label>
                     </div>
@@ -490,7 +490,7 @@ const RoomDetail = () => {
                   
                   {bookingForm.usedFacilities.useAC && room.facilities.hasAirConditioner && (
                     <div>
-                      <label htmlFor="numberOfACUsed" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="numberOfACUsed" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                         Number of AC Units
                       </label>
                       <input
@@ -501,7 +501,7 @@ const RoomDetail = () => {
                         onChange={handleInputChange}
                         min="0"
                         max={room.facilities.numberOfAC}
-                        className="pl-3 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                   )}
@@ -513,16 +513,16 @@ const RoomDetail = () => {
                       name="usedFacilities.useLights"
                       checked={bookingForm.usedFacilities.useLights}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                     />
-                    <label htmlFor="useLights" className="ml-2 block text-sm text-gray-700">
+                    <label htmlFor="useLights" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                       Use Lights
                     </label>
                   </div>
                   
                   {bookingForm.usedFacilities.useLights && (
                     <div>
-                      <label htmlFor="numberOfLightsUsed" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="numberOfLightsUsed" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                         Number of Lights
                       </label>
                       <input
@@ -533,7 +533,7 @@ const RoomDetail = () => {
                         onChange={handleInputChange}
                         min="0"
                         max={room.facilities.numberOfLights}
-                        className="pl-3 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                   )}
@@ -546,9 +546,9 @@ const RoomDetail = () => {
                         name="usedFacilities.useProjector"
                         checked={bookingForm.usedFacilities.useProjector}
                         onChange={handleInputChange}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                       />
-                      <label htmlFor="useProjector" className="ml-2 block text-sm text-gray-700">
+                      <label htmlFor="useProjector" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                         Use Projector
                       </label>
                     </div>
@@ -562,9 +562,9 @@ const RoomDetail = () => {
                         name="usedFacilities.useAudioSystem"
                         checked={bookingForm.usedFacilities.useAudioSystem}
                         onChange={handleInputChange}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                       />
-                      <label htmlFor="useAudioSystem" className="ml-2 block text-sm text-gray-700">
+                      <label htmlFor="useAudioSystem" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                         Use Audio System
                       </label>
                     </div>
@@ -578,9 +578,9 @@ const RoomDetail = () => {
                         name="usedFacilities.useComputers"
                         checked={bookingForm.usedFacilities.useComputers}
                         onChange={handleInputChange}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                       />
-                      <label htmlFor="useComputers" className="ml-2 block text-sm text-gray-700">
+                      <label htmlFor="useComputers" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                         Use Computers
                       </label>
                     </div>
@@ -588,7 +588,7 @@ const RoomDetail = () => {
                   
                   {bookingForm.usedFacilities.useComputers && room.facilities.hasComputers && (
                     <div>
-                      <label htmlFor="numberOfComputersUsed" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="numberOfComputersUsed" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                         Number of Computers
                       </label>
                       <input
@@ -599,7 +599,7 @@ const RoomDetail = () => {
                         onChange={handleInputChange}
                         min="0"
                         max={room.facilities.numberOfComputers}
-                        className="pl-3 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                        className="pl-3 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                   )}
@@ -611,7 +611,7 @@ const RoomDetail = () => {
                     type="button"
                     onClick={calculateCost}
                     disabled={calculating}
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400"
                   >
                     {calculating ? (
                       <>
@@ -626,25 +626,25 @@ const RoomDetail = () => {
                 </div>
                 
                 {costBreakdown && (
-                  <div className="bg-blue-50 p-4 rounded-md mb-6">
-                    <h3 className="text-md font-medium text-blue-800 mb-3">Cost Breakdown</h3>
+                  <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-md mb-6">
+                    <h3 className="text-md font-medium text-blue-800 dark:text-blue-200 mb-3">Cost Breakdown</h3>
                     
                     <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-700">Base Rate:</span>
-                        <span className="text-sm font-medium text-gray-700">${costBreakdown.baseRate.toFixed(2)}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-200">Base Rate:</span>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-200">${costBreakdown.baseRate.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-700">Electricity Cost:</span>
-                        <span className="text-sm font-medium text-gray-700">${costBreakdown.electricityCost.toFixed(2)}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-200">Electricity Cost:</span>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-200">${costBreakdown.electricityCost.toFixed(2)}</span>
                       </div>
-                      <div className="border-t border-gray-200 pt-2 mt-2">
+                      <div className="border-t border-gray-200 dark:border-gray-800 pt-2 mt-2">
                         <div className="flex justify-between">
-                          <span className="text-sm font-medium text-gray-700">Total Cost:</span>
-                          <span className="text-sm font-medium text-blue-800">${costBreakdown.totalCost.toFixed(2)}</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Total Cost:</span>
+                          <span className="text-sm font-medium text-blue-800 dark:text-blue-300">${costBreakdown.totalCost.toFixed(2)}</span>
                         </div>
                       </div>
-                      <div className="text-xs text-gray-500 mt-2">
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                         <p>Duration: {costBreakdown.details.durationHours.toFixed(2)} hours</p>
                         <p>Electricity Consumption: {costBreakdown.details.electricityConsumptionKWh.toFixed(2)} kWh</p>
                       </div>
@@ -656,14 +656,14 @@ const RoomDetail = () => {
                   <button
                     type="button"
                     onClick={() => navigate('/room-booking')}
-                    className="mr-4 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="mr-4 inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={submitting || !costBreakdown}
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400"
                   >
                     {submitting ? (
                       <>

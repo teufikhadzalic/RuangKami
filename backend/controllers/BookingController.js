@@ -277,10 +277,26 @@ exports.getAllBookingsWithStats = async (req, res) => {
       },
     ])
 
+    // Get cancellations by division
+    const divisionCancellationStats = await Booking.aggregate([
+      { $match: { status: "cancelled" } },
+      {
+        $group: {
+          _id: { $ifNull: ["$division", "Unknown"] },
+          totalCancellations: { $sum: 1 },
+          totalCancelledCost: { $sum: "$totalCost" },
+        },
+      },
+      {
+        $sort: { totalCancellations: -1 },
+      },
+    ])
+    console.log('divisionCancellationStats:', divisionCancellationStats);
     res.json({
       bookings,
       userStats,
       divisionStats,
+      divisionCancellationStats, // <-- add this line
     })
   } catch (error) {
     console.error("Get all bookings with stats error:", error)

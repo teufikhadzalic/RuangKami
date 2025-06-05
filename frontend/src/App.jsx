@@ -10,6 +10,7 @@ import Assignments from './pages/Assignments';
 import CreateAssignment from './pages/CreateAssignment';
 import AssignmentDetail from './pages/AssignmentDetail';
 import Schedule from './pages/Schedule';
+import BookingHistory from './pages/BookingHistory';
 import RoomBooking from './pages/RoomBooking';
 import RoomDetail from './pages/RoomDetail';
 import RoomManagement from './pages/RoomManagement';
@@ -50,6 +51,7 @@ function App() {
               <Route path="/room-booking" element={<RoomBooking />} />
               <Route path="/room-booking/:id" element={<RoomDetail />} />
               <Route path="/my-bookings" element={<MyBookings />} />
+              <Route path="/booking-history" element={<BookingHistory />} />
             </Route>
           </Route>
           

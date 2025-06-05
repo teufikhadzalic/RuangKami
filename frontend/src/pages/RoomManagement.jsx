@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus, FaEdit, FaTrash, FaSearch, FaBuilding, FaUsers, FaChalkboardTeacher, FaSnowflake, FaDesktop, FaVolumeUp, FaLightbulb, FaExclamationCircle } from 'react-icons/fa';
+import { FaPlus, FaBook, FaEdit, FaTrash, FaSearch, FaBuilding, FaUsers, FaChalkboardTeacher, FaSnowflake, FaDesktop, FaVolumeUp, FaLightbulb, FaExclamationCircle } from 'react-icons/fa';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../context/AuthContext';
@@ -180,17 +180,17 @@ const RoomManagement = () => {
   const getRoomTypeIcon = (type) => {
     switch (type) {
       case 'classroom':
-        return <FaChalkboardTeacher className="text-blue-600" />;
+        return <FaChalkboardTeacher className="text-blue-600 dark:text-blue-400" />;
       case 'laboratory':
-        return <FaDesktop className="text-green-600" />;
+        return <FaDesktop className="text-green-600 dark:text-green-400" />;
       case 'conference':
-        return <FaUsers className="text-purple-600" />;
+        return <FaUsers className="text-purple-600 dark:text-purple-400" />;
       case 'auditorium':
-        return <FaUsers className="text-red-600" />;
+        return <FaUsers className="text-red-600 dark:text-red-400" />;
       case 'study':
-        return <FaBook className="text-yellow-600" />;
+        return <FaBook className="text-yellow-600 dark:text-yellow-400" />;
       default:
-        return <FaChalkboardTeacher className="text-blue-600" />;
+        return <FaChalkboardTeacher className="text-blue-600 dark:text-blue-400" />;
     }
   };
   
@@ -210,7 +210,6 @@ const RoomManagement = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="page-title">Room Management</h1>
-        
         <button
           onClick={openCreateModal}
           className="btn-primary flex items-center"
@@ -221,17 +220,17 @@ const RoomManagement = () => {
       </div>
       
       {/* Search */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 mb-6">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FaSearch className="h-5 w-5 text-gray-400" />
+            <FaSearch className="h-5 w-5 text-gray-400 dark:text-gray-300" />
           </div>
           <input
             type="text"
             placeholder="Search rooms by number, building, or type..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+            className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
           />
         </div>
       </div>
@@ -240,53 +239,53 @@ const RoomManagement = () => {
       {filteredRooms.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRooms.map(room => (
-            <div key={room._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div key={room._id} className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-semibold text-blue-800">{room.building}, Room {room.roomNumber}</h3>
+                    <h3 className="text-xl font-semibold text-blue-800 dark:text-blue-200">{room.building}, Room {room.roomNumber}</h3>
                     <div className="flex items-center mt-1">
                       {getRoomTypeIcon(room.type)}
-                      <span className="ml-2 text-sm text-gray-600">{formatRoomType(room.type)}</span>
+                      <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">{formatRoomType(room.type)}</span>
                     </div>
                   </div>
-                  <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
                     ${room.baseRatePerHour}/hr
                   </div>
                 </div>
                 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center">
-                    <FaUsers className="text-gray-500 mr-2" />
-                    <span className="text-sm text-gray-700">Capacity: {room.capacity} people</span>
+                    <FaUsers className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm text-gray-700 dark:text-gray-200">Capacity: {room.capacity} people</span>
                   </div>
                   
                   <div className="flex items-center">
-                    <FaBuilding className="text-gray-500 mr-2" />
-                    <span className="text-sm text-gray-700">Floor: {room.floor}</span>
+                    <FaBuilding className="text-gray-500 dark:text-gray-400 mr-2" />
+                    <span className="text-sm text-gray-700 dark:text-gray-200">Floor: {room.floor}</span>
                   </div>
                   
                   <div className="flex flex-wrap gap-2 mt-2">
                     {room.facilities.hasProjector && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                         <FaChalkboardTeacher className="mr-1" />
                         Projector
                       </span>
                     )}
                     {room.facilities.hasAirConditioner && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                         <FaSnowflake className="mr-1" />
                         AC ({room.facilities.numberOfAC})
                       </span>
                     )}
                     {room.facilities.hasComputers && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                         <FaDesktop className="mr-1" />
                         Computers ({room.facilities.numberOfComputers})
                       </span>
                     )}
                     {room.facilities.hasAudioSystem && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                         <FaVolumeUp className="mr-1" />
                         Audio
                       </span>
@@ -297,14 +296,14 @@ const RoomManagement = () => {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => openEditModal(room)}
-                    className="flex-1 inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="flex-1 inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400"
                   >
                     <FaEdit className="mr-2" />
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(room._id)}
-                    className="flex-1 inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    className="flex-1 inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-400"
                   >
                     <FaTrash className="mr-2" />
                     Delete
@@ -315,10 +314,10 @@ const RoomManagement = () => {
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <FaExclamationCircle className="mx-auto h-12 w-12 text-blue-500 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No rooms found</h3>
-          <p className="text-gray-500 mb-4">
+        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-8 text-center">
+          <FaExclamationCircle className="mx-auto h-12 w-12 text-blue-500 dark:text-blue-400 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No rooms found</h3>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
             {searchTerm ? `No rooms match "${searchTerm}".` : 'You haven\'t created any rooms yet.'}
           </p>
           <button
@@ -341,18 +340,18 @@ const RoomManagement = () => {
             
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="inline-block align-bottom bg-white dark:bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="bg-white dark:bg-gray-900 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                       {modalMode === 'create' ? 'Create New Room' : 'Edit Room'}
                     </h3>
                     <div className="mt-4">
                       <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label htmlFor="roomNumber" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="roomNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                               Room Number*
                             </label>
                             <input
@@ -361,13 +360,13 @@ const RoomManagement = () => {
                               name="roomNumber"
                               value={formData.roomNumber}
                               onChange={handleInputChange}
-                              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                               required
                             />
                           </div>
                           
                           <div>
-                            <label htmlFor="building" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="building" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                               Building*
                             </label>
                             <input
@@ -376,13 +375,13 @@ const RoomManagement = () => {
                               name="building"
                               value={formData.building}
                               onChange={handleInputChange}
-                              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                               required
                             />
                           </div>
                           
                           <div>
-                            <label htmlFor="floor" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="floor" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                               Floor
                             </label>
                             <input
@@ -392,12 +391,12 @@ const RoomManagement = () => {
                               value={formData.floor}
                               onChange={handleInputChange}
                               min="1"
-                              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             />
                           </div>
                           
                           <div>
-                            <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                               Capacity
                             </label>
                             <input
@@ -407,12 +406,12 @@ const RoomManagement = () => {
                               value={formData.capacity}
                               onChange={handleInputChange}
                               min="1"
-                              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             />
                           </div>
                           
                           <div>
-                            <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                               Room Type
                             </label>
                             <select
@@ -420,7 +419,7 @@ const RoomManagement = () => {
                               name="type"
                               value={formData.type}
                               onChange={handleInputChange}
-                              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             >
                               <option value="classroom">Classroom</option>
                               <option value="laboratory">Laboratory</option>
@@ -431,7 +430,7 @@ const RoomManagement = () => {
                           </div>
                           
                           <div>
-                            <label htmlFor="baseRatePerHour" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="baseRatePerHour" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                               Base Rate ($/hour)
                             </label>
                             <input
@@ -442,12 +441,12 @@ const RoomManagement = () => {
                               onChange={handleInputChange}
                               min="0"
                               step="0.01"
-                              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             />
                           </div>
                           
                           <div>
-                            <label htmlFor="electricityRatePerKWh" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="electricityRatePerKWh" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                               Electricity Rate ($/kWh)
                             </label>
                             <input
@@ -458,13 +457,13 @@ const RoomManagement = () => {
                               onChange={handleInputChange}
                               min="0"
                               step="0.01"
-                              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                              className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             />
                           </div>
                         </div>
                         
                         <div className="mt-4">
-                          <h4 className="text-md font-medium text-gray-700 mb-2">Facilities</h4>
+                          <h4 className="text-md font-medium text-gray-700 dark:text-gray-200 mb-2">Facilities</h4>
                           
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="flex items-center">
@@ -474,9 +473,9 @@ const RoomManagement = () => {
                                 name="facilities.hasProjector"
                                 checked={formData.facilities.hasProjector}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                               />
-                              <label htmlFor="hasProjector" className="ml-2 block text-sm text-gray-700">
+                              <label htmlFor="hasProjector" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                                 Has Projector
                               </label>
                             </div>
@@ -488,9 +487,9 @@ const RoomManagement = () => {
                                 name="facilities.hasWhiteboard"
                                 checked={formData.facilities.hasWhiteboard}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                               />
-                              <label htmlFor="hasWhiteboard" className="ml-2 block text-sm text-gray-700">
+                              <label htmlFor="hasWhiteboard" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                                 Has Whiteboard
                               </label>
                             </div>
@@ -502,9 +501,9 @@ const RoomManagement = () => {
                                 name="facilities.hasAirConditioner"
                                 checked={formData.facilities.hasAirConditioner}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                               />
-                              <label htmlFor="hasAirConditioner" className="ml-2 block text-sm text-gray-700">
+                              <label htmlFor="hasAirConditioner" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                                 Has Air Conditioner
                               </label>
                             </div>
@@ -512,7 +511,7 @@ const RoomManagement = () => {
                             {formData.facilities.hasAirConditioner && (
                               <>
                                 <div>
-                                  <label htmlFor="numberOfAC" className="block text-sm font-medium text-gray-700">
+                                  <label htmlFor="numberOfAC" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                                     Number of AC Units
                                   </label>
                                   <input
@@ -522,12 +521,12 @@ const RoomManagement = () => {
                                     value={formData.facilities.numberOfAC}
                                     onChange={handleInputChange}
                                     min="1"
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                                   />
                                 </div>
                                 
                                 <div>
-                                  <label htmlFor="acPowerConsumption" className="block text-sm font-medium text-gray-700">
+                                  <label htmlFor="acPowerConsumption" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                                     AC Power (Watts)
                                   </label>
                                   <input
@@ -537,7 +536,7 @@ const RoomManagement = () => {
                                     value={formData.facilities.acPowerConsumption}
                                     onChange={handleInputChange}
                                     min="0"
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                                   />
                                 </div>
                               </>
@@ -550,16 +549,16 @@ const RoomManagement = () => {
                                 name="facilities.hasComputers"
                                 checked={formData.facilities.hasComputers}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                               />
-                              <label htmlFor="hasComputers" className="ml-2 block text-sm text-gray-700">
+                              <label htmlFor="hasComputers" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                                 Has Computers
                               </label>
                             </div>
                             
                             {formData.facilities.hasComputers && (
                               <div>
-                                <label htmlFor="numberOfComputers" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="numberOfComputers" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                                   Number of Computers
                                 </label>
                                 <input
@@ -569,7 +568,7 @@ const RoomManagement = () => {
                                   value={formData.facilities.numberOfComputers}
                                   onChange={handleInputChange}
                                   min="1"
-                                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                                 />
                               </div>
                             )}
@@ -581,16 +580,16 @@ const RoomManagement = () => {
                                 name="facilities.hasAudioSystem"
                                 checked={formData.facilities.hasAudioSystem}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-700 rounded"
                               />
-                              <label htmlFor="hasAudioSystem" className="ml-2 block text-sm text-gray-700">
+                              <label htmlFor="hasAudioSystem" className="ml-2 block text-sm text-gray-700 dark:text-gray-200">
                                 Has Audio System
                               </label>
                             </div>
                             
                             {formData.facilities.hasAudioSystem && (
                               <div>
-                                <label htmlFor="audioSystemPowerConsumption" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="audioSystemPowerConsumption" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                                   Audio System Power (Watts)
                                 </label>
                                 <input
@@ -600,13 +599,13 @@ const RoomManagement = () => {
                                   value={formData.facilities.audioSystemPowerConsumption}
                                   onChange={handleInputChange}
                                   min="0"
-                                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                  className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                                 />
                               </div>
                             )}
                             
                             <div>
-                              <label htmlFor="numberOfLights" className="block text-sm font-medium text-gray-700">
+                              <label htmlFor="numberOfLights" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                                 Number of Lights
                               </label>
                               <input
@@ -616,12 +615,12 @@ const RoomManagement = () => {
                                 value={formData.facilities.numberOfLights}
                                 onChange={handleInputChange}
                                 min="1"
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                               />
                             </div>
                             
                             <div>
-                              <label htmlFor="lightPowerConsumption" className="block text-sm font-medium text-gray-700">
+                              <label htmlFor="lightPowerConsumption" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
                                 Light Power (Watts)
                               </label>
                               <input
@@ -631,7 +630,7 @@ const RoomManagement = () => {
                                 value={formData.facilities.lightPowerConsumption}
                                 onChange={handleInputChange}
                                 min="0"
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="mt-1 block w-full border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                               />
                             </div>
                           </div>
@@ -641,18 +640,18 @@ const RoomManagement = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <div className="bg-gray-50 dark:bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   {modalMode === 'create' ? 'Create' : 'Update'}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-blue-400 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Cancel
                 </button>
