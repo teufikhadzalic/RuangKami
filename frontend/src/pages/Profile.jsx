@@ -202,29 +202,29 @@ const Profile = () => {
     <div>
       <h1 className="page-title">My Profile</h1>
 
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
         <div className="md:flex">
           {/* Profile Sidebar */}
-          <div className="md:w-1/3 bg-blue-50 p-6 flex flex-col items-center">
-            <div className="h-32 w-32 rounded-full bg-blue-500 flex items-center justify-center text-white text-4xl font-bold mb-4">
+          <div className="md:w-1/3 bg-blue-50 dark:bg-blue-950 p-6 flex flex-col items-center">
+            <div className="h-32 w-32 rounded-full bg-blue-500 dark:bg-blue-800 flex items-center justify-center text-white text-4xl font-bold mb-4">
               {userProfile?.name?.charAt(0) || "U"}
             </div>
 
-            <h2 className="text-xl font-semibold text-blue-800 mb-1">{userProfile?.name}</h2>
-            <p className="text-sm text-gray-600 mb-4">{userProfile?.email}</p>
+            <h2 className="text-xl font-semibold text-blue-800 dark:text-blue-200 mb-1">{userProfile?.name}</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{userProfile?.email}</p>
 
-            <div className="bg-white rounded-lg p-4 w-full mb-4">
+            <div className="bg-white dark:bg-gray-900 rounded-lg p-4 w-full mb-4">
               <div className="flex items-center mb-2">
-                <FaUserTag className="text-blue-600 mr-2" />
-                <span className="text-sm font-medium text-gray-700">Role:</span>
-                <span className="ml-2 text-sm text-gray-700">{getRoleName(userProfile?.role)}</span>
+                <FaUserTag className="text-blue-600 dark:text-blue-400 mr-2" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Role:</span>
+                <span className="ml-2 text-sm text-gray-700 dark:text-gray-200">{getRoleName(userProfile?.role)}</span>
               </div>
 
               {userProfile?.division && (
                 <div className="flex items-center">
-                  <FaBuilding className="text-blue-600 mr-2" />
-                  <span className="text-sm font-medium text-gray-700">Division:</span>
-                  <span className="ml-2 text-sm text-gray-700">
+                  <FaBuilding className="text-blue-600 dark:text-blue-400 mr-2" />
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Division:</span>
+                  <span className="ml-2 text-sm text-gray-700 dark:text-gray-200">
                     {userProfile.division.charAt(0).toUpperCase() + userProfile.division.slice(1)}
                   </span>
                 </div>
@@ -234,7 +234,7 @@ const Profile = () => {
             <div className="w-full">
               <button
                 onClick={() => setEditMode(true)}
-                className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400"
               >
                 <FaEdit className="mr-2" />
                 Edit Profile
@@ -246,16 +246,16 @@ const Profile = () => {
           <div className="md:w-2/3 p-6">
             {editMode ? (
               <form onSubmit={handleSubmit}>
-                <h3 className="text-lg font-medium text-blue-800 mb-4">Edit Profile</h3>
+                <h3 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-4">Edit Profile</h3>
 
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       Full Name
                     </label>
                     <div className="relative rounded-md shadow-sm">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaUser className="h-5 w-5 text-gray-400" />
+                        <FaUser className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                       </div>
                       <input
                         type="text"
@@ -263,7 +263,7 @@ const Profile = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                        className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         placeholder="Full Name"
                         required
                       />
@@ -271,12 +271,12 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                       Email Address
                     </label>
                     <div className="relative rounded-md shadow-sm">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FaEnvelope className="h-5 w-5 text-gray-400" />
+                        <FaEnvelope className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                       </div>
                       <input
                         type="email"
@@ -284,7 +284,7 @@ const Profile = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                        className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         placeholder="Email Address"
                         required
                       />
@@ -295,7 +295,7 @@ const Profile = () => {
                     <button
                       type="button"
                       onClick={() => setShowPasswordFields(!showPasswordFields)}
-                      className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center"
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center dark:text-blue-400 dark:hover:text-blue-300"
                     >
                       <FaLock className="mr-2" />
                       {showPasswordFields ? "Cancel Password Change" : "Change Password"}
@@ -305,12 +305,12 @@ const Profile = () => {
                   {showPasswordFields && (
                     <div className="space-y-4 pt-2">
                       <div>
-                        <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                           Current Password
                         </label>
                         <div className="relative rounded-md shadow-sm">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <FaLock className="h-5 w-5 text-gray-400" />
+                            <FaLock className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                           </div>
                           <input
                             type="password"
@@ -318,19 +318,19 @@ const Profile = () => {
                             name="currentPassword"
                             value={formData.currentPassword}
                             onChange={handleInputChange}
-                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             placeholder="Current Password"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                           New Password
                         </label>
                         <div className="relative rounded-md shadow-sm">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <FaLock className="h-5 w-5 text-gray-400" />
+                            <FaLock className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                           </div>
                           <input
                             type="password"
@@ -338,19 +338,19 @@ const Profile = () => {
                             name="newPassword"
                             value={formData.newPassword}
                             onChange={handleInputChange}
-                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             placeholder="New Password"
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                           Confirm New Password
                         </label>
                         <div className="relative rounded-md shadow-sm">
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <FaLock className="h-5 w-5 text-gray-400" />
+                            <FaLock className="h-5 w-5 text-gray-400 dark:text-gray-300" />
                           </div>
                           <input
                             type="password"
@@ -358,7 +358,7 @@ const Profile = () => {
                             name="confirmPassword"
                             value={formData.confirmPassword}
                             onChange={handleInputChange}
-                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             placeholder="Confirm New Password"
                           />
                         </div>
@@ -370,7 +370,7 @@ const Profile = () => {
                     <button
                       type="button"
                       onClick={cancelEdit}
-                      className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                     >
                       <FaTimes className="mr-2" />
                       Cancel
@@ -378,7 +378,7 @@ const Profile = () => {
                     <button
                       type="submit"
                       disabled={saving}
-                      className="inline-flex justify-center items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex justify-center items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400"
                     >
                       {saving ? (
                         <>
@@ -416,36 +416,36 @@ const Profile = () => {
               </form>
             ) : (
               <div>
-                <h3 className="text-lg font-medium text-blue-800 mb-4">Account Information</h3>
+                <h3 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-4">Account Information</h3>
 
                 <div className="space-y-4">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700">Full Name</h4>
-                    <p className="text-sm text-gray-900">{userProfile?.name}</p>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-200">Full Name</h4>
+                    <p className="text-sm text-gray-900 dark:text-gray-100">{userProfile?.name}</p>
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700">Email Address</h4>
-                    <p className="text-sm text-gray-900">{userProfile?.email}</p>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-200">Email Address</h4>
+                    <p className="text-sm text-gray-900 dark:text-gray-100">{userProfile?.email}</p>
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700">Role</h4>
-                    <p className="text-sm text-gray-900">{getRoleName(userProfile?.role)}</p>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-200">Role</h4>
+                    <p className="text-sm text-gray-900 dark:text-gray-100">{getRoleName(userProfile?.role)}</p>
                   </div>
 
                   {userProfile?.division && (
                     <div>
-                      <h4 className="text-sm font-medium text-gray-700">Division</h4>
-                      <p className="text-sm text-gray-900">
+                      <h4 className="text-sm font-medium text-gray-700 dark:text-gray-200">Division</h4>
+                      <p className="text-sm text-gray-900 dark:text-gray-100">
                         {userProfile.division.charAt(0).toUpperCase() + userProfile.division.slice(1)}
                       </p>
                     </div>
                   )}
 
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700">Account Created</h4>
-                    <p className="text-sm text-gray-900">
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-200">Account Created</h4>
+                    <p className="text-sm text-gray-900 dark:text-gray-100">
                       {userProfile?.createdAt
                         ? new Date(userProfile.createdAt).toLocaleDateString("en-US", {
                             year: "numeric",
@@ -457,13 +457,13 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <h3 className="text-lg font-medium text-blue-800 mb-4">Account Actions</h3>
+                <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                  <h3 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-4">Account Actions</h3>
 
                   <div className="space-y-3">
                     <button
                       onClick={() => setEditMode(true)}
-                      className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-900 dark:focus:ring-blue-400"
                     >
                       <FaEdit className="mr-2" />
                       Edit Profile
@@ -471,7 +471,7 @@ const Profile = () => {
 
                     <button
                       onClick={logout}
-                      className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                      className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-400"
                     >
                       <FaLock className="mr-2" />
                       Logout

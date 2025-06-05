@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaFilter, FaCalendarAlt, FaClock, FaUsers, FaLightbulb, FaSnowflake, FaDesktop, FaChalkboardTeacher } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaCalendarAlt, FaClock, FaUsers, FaLightbulb, FaSnowflake, FaDesktop, FaChalkboardTeacher, FaVolumeUp, FaBook } from 'react-icons/fa';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../context/AuthContext';
@@ -74,17 +74,17 @@ const RoomBooking = () => {
   const getRoomTypeIcon = (type) => {
     switch (type) {
       case 'classroom':
-        return <FaChalkboardTeacher className="text-blue-600" />;
+        return <FaChalkboardTeacher className="text-blue-600 dark:text-blue-400" />;
       case 'laboratory':
-        return <FaDesktop className="text-green-600" />;
+        return <FaDesktop className="text-green-600 dark:text-green-400" />;
       case 'conference':
-        return <FaUsers className="text-purple-600" />;
+        return <FaUsers className="text-purple-600 dark:text-purple-400" />;
       case 'auditorium':
-        return <FaUsers className="text-red-600" />;
+        return <FaUsers className="text-red-600 dark:text-red-400" />;
       case 'study':
-        return <FaBook className="text-yellow-600" />;
+        return <FaBook className="text-yellow-600 dark:text-yellow-400" />;
       default:
-        return <FaChalkboardTeacher className="text-blue-600" />;
+        return <FaChalkboardTeacher className="text-blue-600 dark:text-blue-400" />;
     }
   };
   
@@ -97,17 +97,17 @@ const RoomBooking = () => {
       <h1 className="page-title">Room Booking</h1>
       
       {/* Search Form */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h2 className="text-lg font-medium text-blue-800 mb-4">Find Available Rooms</h2>
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 mb-6">
+        <h2 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-4">Find Available Rooms</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           <div>
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               Date*
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaCalendarAlt className="h-5 w-5 text-gray-400" />
+                <FaCalendarAlt className="h-5 w-5 text-gray-400 dark:text-gray-300" />
               </div>
               <input
                 type="date"
@@ -116,19 +116,19 @@ const RoomBooking = () => {
                 value={searchParams.date}
                 onChange={handleInputChange}
                 min={new Date().toISOString().split('T')[0]}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 required
               />
             </div>
           </div>
           
           <div>
-            <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               Start Time*
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaClock className="h-5 w-5 text-gray-400" />
+                <FaClock className="h-5 w-5 text-gray-400 dark:text-gray-300" />
               </div>
               <input
                 type="time"
@@ -136,19 +136,19 @@ const RoomBooking = () => {
                 name="startTime"
                 value={searchParams.startTime}
                 onChange={handleInputChange}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 required
               />
             </div>
           </div>
           
           <div>
-            <label htmlFor="endTime" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="endTime" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               End Time*
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaClock className="h-5 w-5 text-gray-400" />
+                <FaClock className="h-5 w-5 text-gray-400 dark:text-gray-300" />
               </div>
               <input
                 type="time"
@@ -156,19 +156,19 @@ const RoomBooking = () => {
                 name="endTime"
                 value={searchParams.endTime}
                 onChange={handleInputChange}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                 required
               />
             </div>
           </div>
           
           <div>
-            <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               Capacity (Min)
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaUsers className="h-5 w-5 text-gray-400" />
+                <FaUsers className="h-5 w-5 text-gray-400 dark:text-gray-300" />
               </div>
               <input
                 type="number"
@@ -178,13 +178,13 @@ const RoomBooking = () => {
                 onChange={handleInputChange}
                 min="1"
                 placeholder="Any capacity"
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
               />
             </div>
           </div>
           
           <div>
-            <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="type" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
               Room Type
             </label>
             <select
@@ -192,7 +192,7 @@ const RoomBooking = () => {
               name="type"
               value={searchParams.type}
               onChange={handleInputChange}
-              className="pl-3 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full"
+              className="pl-3 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
             >
               <option value="">Any type</option>
               <option value="classroom">Classroom</option>
@@ -231,55 +231,55 @@ const RoomBooking = () => {
       {/* Results */}
       {searchPerformed && (
         <div>
-          <h2 className="text-lg font-medium text-blue-800 mb-4">
+          <h2 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-4">
             Available Rooms for {new Date(searchParams.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} ({searchParams.startTime} - {searchParams.endTime})
           </h2>
           
           {rooms.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rooms.map(room => (
-                <div key={room._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <div key={room._id} className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h3 className="text-xl font-semibold text-blue-800">{room.building}, Room {room.roomNumber}</h3>
+                        <h3 className="text-xl font-semibold text-blue-800 dark:text-blue-200">{room.building}, Room {room.roomNumber}</h3>
                         <div className="flex items-center mt-1">
                           {getRoomTypeIcon(room.type)}
-                          <span className="ml-2 text-sm text-gray-600">{formatRoomType(room.type)}</span>
+                          <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">{formatRoomType(room.type)}</span>
                         </div>
                       </div>
-                      <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                      <div className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
                         ${room.baseRatePerHour}/hr
                       </div>
                     </div>
                     
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center">
-                        <FaUsers className="text-gray-500 mr-2" />
-                        <span className="text-sm text-gray-700">Capacity: {room.capacity} people</span>
+                        <FaUsers className="text-gray-500 dark:text-gray-400 mr-2" />
+                        <span className="text-sm text-gray-700 dark:text-gray-200">Capacity: {room.capacity} people</span>
                       </div>
                       
                       <div className="flex flex-wrap gap-2">
                         {room.facilities.hasProjector && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                             <FaChalkboardTeacher className="mr-1" />
                             Projector
                           </span>
                         )}
                         {room.facilities.hasAirConditioner && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                             <FaSnowflake className="mr-1" />
                             AC
                           </span>
                         )}
                         {room.facilities.hasAudioSystem && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                             <FaVolumeUp className="mr-1" />
                             Audio
                           </span>
                         )}
                         {room.facilities.hasComputers && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                             <FaDesktop className="mr-1" />
                             Computers ({room.facilities.numberOfComputers})
                           </span>
@@ -306,10 +306,10 @@ const RoomBooking = () => {
               ))}
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-md p-8 text-center">
-              <FaExclamationCircle className="mx-auto h-12 w-12 text-blue-500 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No available rooms found</h3>
-              <p className="text-gray-500">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-8 text-center">
+              <FaExclamationCircle className="mx-auto h-12 w-12 text-blue-500 dark:text-blue-400 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No available rooms found</h3>
+              <p className="text-gray-500 dark:text-gray-400">
                 Try adjusting your search criteria or selecting a different time slot.
               </p>
             </div>
