@@ -21,10 +21,7 @@
 
 ---
 
-## 👥 Team Members
-- Adhikananda Wira Januar (2306267113)
-- Kelvin Ferrell Tjoe (2306205293)
-- Muhammad Hilmi Al-Muttaqi (2306267082)
+## Creator
 - Teufik Ali Hadzalic (2306267012)
 
 ---
